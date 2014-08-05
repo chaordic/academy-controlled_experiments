@@ -1,4 +1,4 @@
-shiny-bear
+Chaordic Academy: Controlled Experiments
 =========
 
 Coleção de scripts para o Módulo 'Estatística para Experimentos Controlados' da Academia Chaordic
