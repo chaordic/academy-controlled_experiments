@@ -17,7 +17,7 @@ def create_random_sample_from_beta(success, total, sample_size=10000, plot=False
 
     failures = total - success
     data = stats.beta.rvs(success, failures, size=sample_size)
-    if plot: hist(data, 100), show()
+    if plot: hist(data, 100); show()
     return data
 
 
