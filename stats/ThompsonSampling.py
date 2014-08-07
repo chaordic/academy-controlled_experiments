@@ -24,6 +24,8 @@ def simulate_bandit(number_of_requests=1000):
     # Note that we have to define the expected conversion
     # rate of each alternative, quantity that is unknown
     # in actual test applications
+    # Also note that the field 'requests so far' is used
+    # only for plotting
     alternatives = {
         'A': {
             'success': 1,
@@ -52,26 +54,25 @@ def simulate_bandit(number_of_requests=1000):
     # received by each alternative during time
     proportions_in_time = []
 
-    # For each simulated alternative
+    # For each simulated request
     for _ in range(1, number_of_requests):
 
-        # Let's choose one according to the Thompson Sampling procedure
+        # Thompson Sampling procedure
         for alternative in alternatives:
             # Get history so far
             success = alternatives[alternative]['success']
             failure = alternatives[alternative]['failure']
-            # Store alternative's own number from Beta
+            # Store alternative's own number from Beta in this round
             alternatives[alternative]['tmp_random_beta'] = stats.beta.rvs(success, failure)
 
-        # Sort by random number from Beta
+        # Sort by random number from Beta, and choose
+        # the alternative with the highest number
         chosen_alternative = sorted(alternatives.iteritems(), 
                                 key=lambda (x, y): y['tmp_random_beta'],
                                 reverse=True)[0][0]
 
-        # Feedback is necessary, so we update success and failure
-        alternatives[chosen_alternative]['requests_so_far'] += 1
-
         # Store for plotting
+        alternatives[chosen_alternative]['requests_so_far'] += 1
         list_of_alternatives_requests = [alternatives[alternative]['requests_so_far']
                                             for alternative in alternatives]
         requests_so_far = sum(list_of_alternatives_requests)
@@ -85,8 +86,10 @@ def simulate_bandit(number_of_requests=1000):
 
         # Fake (simulated) conversion
         if random() < alternatives[chosen_alternative]['simulated_conversion']:
+            # Feedback is necessary, so we update alternative status, being it good
             alternatives[chosen_alternative]['success'] += 1
         else:
+            # Feedback is necessary, so we update alternative status, being it bad
             alternatives[chosen_alternative]['failure'] += 1
 
     plot(proportions_in_time); legend(alternatives.keys()); xlabel('thousands'); show()
