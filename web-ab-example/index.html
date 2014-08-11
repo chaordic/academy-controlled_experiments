@@ -40,11 +40,11 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Amazeballs!</a>
+            <a class="navbar-brand" href="#">Amaze-ing</a>
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Products</a></li>
+              <li><a href="#">Products</a></li>
               <li><a href="#">Services</a></li>
               <li><a href="#">Press</a></li>
               <li><a href="#">CS1.6</a></li>
@@ -54,10 +54,22 @@
         </div><!--/.container-fluid -->
       </div>
 
-      <div class="jumbotron">
+      <div class="jumbotron" id="groupA" style="display: none;">
         <h1>Call to Action!!!</h1>
         <p class="lead">Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá, depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio.</p>
         <p><a class="btn btn-lg btn-success" href="signup.html?group=A" role="button">Sign up today</a></p>
+      </div>
+
+      <div class="jumbotron" id="groupB" style="display: none;">
+        <div class="row">
+          <div class="col-md-8">
+            <h1>Call to Action!!!</h1>
+            <p class="lead">Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá, depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio.</p>
+          </div>
+          <div class="col-md-4">
+            <p style="text-align: center;"><a class="btn btn-lg btn-success" href="signup.html?group=B" role="button" style="margin-top: 60px; font-size: 28px;">Sign up today</a></p>
+          </div>
+        </div>
       </div>
 
       <div class="row marketing">
@@ -89,5 +101,73 @@
       </div>
 
     </div> <!-- /container -->
+
+    <script type="text/javascript">
+    // Helper for testing
+    window.deleteCookie = function(name) {
+      document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    };
+      
+    (function() {
+      var guid = (function() {
+        function s4() {
+          return Math.floor((1 + Math.random()) * 0x10000)
+                     .toString(16)
+                     .substring(1);
+        }
+        return function() {
+          return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+                 s4() + '-' + s4() + s4() + s4();
+        };
+      })();
+
+      var readCookie = function(name) {
+        return document.cookie.split(';')
+          .map(function(c) { return c.split('='); })
+          .filter(function(c) { return c[0].trim() === name; })[0];
+      };
+
+      var getGroup = function() {
+        var group,
+            cookieKey = 'amazing-ab-group',
+            userIdKey = 'amazing-userid',
+            cookie = readCookie(cookieKey),
+            userId = readCookie(userIdKey);
+
+        if (cookie && userId) {
+          return cookie[1];
+        }
+        
+        // Math random is not good, we should use decent random number generator from the server.
+        group = Math.random() < 0.5 ? 'A' : 'B';
+        document.cookie = cookieKey + '=' + group;
+        document.cookie = userIdKey + '=' + guid();
+
+        return group;
+      };
+
+      var group = getGroup();
+      document.getElementById("group").innerHTML = "Group " + group;
+
+      /**
+       * We are using the following get request so to register a view with the same
+       * url that the user was navigating. This could be replaced by the same cookie
+       * log parsing technic that we use for the userid but i'll leave this here so
+       * we can see that log manipulation is possible in many ways.
+       */
+      $.get(window.location + '?group=' + group);
+
+      if (group === 'A') {
+        // Devemos mostrar grupo A
+        document.getElementById("groupA").style.display = "block";
+      }
+      else {
+        // Devemos mostrar grupo B
+        document.getElementById("groupB").style.display = "block";
+      }
+    }());
+    </script>
+
+
   </body>
 </html>
