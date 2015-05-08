@@ -7,7 +7,7 @@ BayesianStatistics.py
 
 
 from scipy import stats
-from matplotlib.pyplot import hist,  show
+from matplotlib.pyplot import hist, show
 
 from ConfidenceIntervals import get_confidence_intervals_using_the_quantiles
 

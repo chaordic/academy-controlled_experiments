@@ -56,8 +56,8 @@ def main():
 
     print 'The flip of a fair coin:', flip_a_fair_coin()
     print 'Guessing babies:', guess_a_baby()
-    print 'The flip of a another fair coin:', example_flip_a_coin(fairness=0.5)
-    print 'The flip of a unfair coin:', example_flip_a_coin(fairness=0.2)
+    print 'The flip of another fair coin:', example_flip_a_coin(fairness=0.5)
+    print 'The flip of an unfair coin:', example_flip_a_coin(fairness=0.2)
 
 
 if __name__ == '__main__':
