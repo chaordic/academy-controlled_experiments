@@ -34,7 +34,7 @@ the access log.
 The log __must__ have the following configuration in order for the `parse-log.py` script to work properly:
 
 ```
-LogFormat "%h %l %u %t \"%r\" %>s %b %{amazing-userid}C" common
+LogFormat "%h %l %u %t \"%r\" %>s %b %{amazing-ab-group}C %{amazing-userid}C" common
 ```
 
 This restriction can be easily lifted by refactoring the regular expression presented in that file.
